@@ -145,7 +145,7 @@ func (decoder *EthTransactionDecoder) CreateSimpleRawTransaction(wrapper openwal
 		rawTx,
 		findAddrBalance,
 		feeInfo,
-		"",
+		rawTx.GetExtParam().Get("memo").String(),
 		tmpNonce)
 	if createTxErr != nil {
 		return createTxErr
@@ -925,7 +925,7 @@ func (decoder *EthTransactionDecoder) createRawTransaction(wrapper openwallet.Wa
 		}
 
 		tx = types.NewTransaction(nonce, ethcom.HexToAddress(decoder.wm.CustomAddressDecodeFunc(destination)),
-			amount, gasLimit, fee.GasPrice, []byte(""))
+			amount, gasLimit, fee.GasPrice, []byte(callData))
 	}
 
 	rawHex, err := rlp.EncodeToBytes(tx)

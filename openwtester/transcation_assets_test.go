@@ -40,7 +40,7 @@ func testGetAssetsAccountTokenBalance(tm *openw.WalletManager, walletID, account
 	log.Info("token balance:", balance.Balance)
 }
 
-func testCreateTransactionStep(tm *openw.WalletManager, walletID, accountID, to, amount, feeRate string, contract *openwallet.SmartContract, extParam map[string]interface{}) (*openwallet.RawTransaction, error) {
+func testCreateTransactionStep(tm *openw.WalletManager, walletID, accountID, to, amount, feeRate, memo string, contract *openwallet.SmartContract, extParam map[string]interface{}) (*openwallet.RawTransaction, error) {
 
 	//err := tm.RefreshAssetsAccountBalance(testApp, accountID)
 	//if err != nil {
@@ -48,7 +48,7 @@ func testCreateTransactionStep(tm *openw.WalletManager, walletID, accountID, to,
 	//	return nil, err
 	//}
 
-	rawTx, err := tm.CreateTransaction(testApp, walletID, accountID, amount, to, feeRate, "test", contract, extParam)
+	rawTx, err := tm.CreateTransaction(testApp, walletID, accountID, amount, to, feeRate, memo, contract, extParam)
 
 	if err != nil {
 		log.Error("CreateTransaction failed, unexpected error:", err)
@@ -124,9 +124,9 @@ func TestTransfer_ETH(t *testing.T) {
 	to := "0x2f0b01cf4f5d2430423d4fba412bfb6347ae8cac"
 	testGetAssetsAccountBalance(tm, walletID, accountID)
 
+	data := "test"
 
-
-	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "1", "", nil,nil)
+	rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "1", "", data, nil,nil)
 	if err != nil {
 		return
 	}
@@ -180,7 +180,7 @@ func TestTransfer_ERC20(t *testing.T) {
 	testGetAssetsAccountTokenBalance(tm, walletID, accountID, contract)
 
 	for _, to := range addrs {
-		rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "12.34", "", &contract, nil)
+		rawTx, err := testCreateTransactionStep(tm, walletID, accountID, to, "12.34", "","", &contract, nil)
 		if err != nil {
 			return
 		}
