@@ -4,7 +4,7 @@
 
 ## 如何测试
 
-openwtester包下的测试用例已经集成了openwallet钱包体系，创建conf文件，新建ETH.ini文件，编辑如下内容：
+openwtester包下的测试用例已经集成了openwallet钱包体系，在openwtester目录下创建conf文件夹，在文件夹中新建ETH.ini文件，编辑如下内容：
 
 ```ini
 
